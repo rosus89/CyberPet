@@ -1,5 +1,8 @@
 import Cat from "./models/Cat.js";
 import Dog from "./models/Dog.js";
+import petType from "./choices/petType.js";
+import actions from "./choices/actions.js";
+
 import inquirer from "inquirer";
 
 
@@ -15,21 +18,9 @@ let $ = {
                               await $.setPetName(); 
                             },              
 
-    setPetType: async () => { await _({  
-                            type:'list',
-                            name:'type',
+    setPetType: async () => { await _({  type:'list', name:'type',
                             message:'What type of pet would you like?',
-                            choices:[
-                                {
-                                    name:'Cat',
-                                    value:'Cat'
-                                },
-                                {
-                                    name:'Dog',
-                                    value:'Dog'
-                                }
-                            ]
-                            })
+                            choices: petType })
                         .then((ans) => {
                             switch(ans.type){
                                 case 'Cat':
@@ -42,37 +33,20 @@ let $ = {
                         } )
                         },
 
-    setPetName: async () => { await _({  
-                            type:'input',
-                            name:'name',
-                            message:'How should your pet be called?'
-                            })
+    setPetName: async () => { await _({  type:'input', name:'name',
+                        message:'How should your pet be called?'})
                         .then((ans)=> pet.name = ans.name)
                         },
 
-    setPetAct: async () => { await _({   
-                            type:'list',
-                            name:'act',
-                            message:'Select and activity to do with ' + pet.name,
-                            choices: [
-                                {
-                                    name:"Play with your pet",
-                                    value:"play"
-                                },
-                                {
-                                    name:"Feed your pet",
-                                    value:"eat"
-                                }
-                            ]
-                            })
+    setPetAct: async () => { await _({ type:'list', name:'act',
+                        message:'Select and activity to do with ' + pet.name,
+                        choices: [...actions.animal ,...actions[pet.constructor.name]]})
                         .then((ans)=> pet[ans.act]())
                         pet.stats()
                         $.setPetAct()
 
                         },
-    close: async () => { await _({
-                        type:'list',
-                        name:'close',
+    close: async () => { await _({  type:'list', name:'close',
                         message:'Have you finished playing with your pet?',
                         choices: [
                             {
@@ -83,9 +57,7 @@ let $ = {
                                 name:"no",
                                 value:"no"
                             }
-                        ]
-
-                    })
+                        ]})
                     .then((ans)=>{
                         console.log(ans)
                     })

@@ -7,7 +7,7 @@ class Animal {
         this.happiness = 50
         this.energy = 100
     }
-    drinks() {
+    drink() {
         this.health += 5
         this.thirst += 10
         this.energy -= 10
