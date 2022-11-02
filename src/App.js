@@ -2,6 +2,7 @@ import Cat from "./models/Cat.js";
 import Dog from "./models/Dog.js";
 import petType from "./choices/petType.js";
 import actions from "./choices/actions.js";
+import closeApp from "./choices/closeApp.js";
 
 import inquirer from "inquirer";
 
@@ -48,16 +49,7 @@ let $ = {
                         },
     close: async () => { await _({  type:'list', name:'close',
                         message:'Have you finished playing with your pet?',
-                        choices: [
-                            {
-                                name:"yes",
-                                value:"yes"
-                            },
-                            {
-                                name:"no",
-                                value:"no"
-                            }
-                        ]})
+                        choices: closeApp })
                     .then((ans)=>{
                         console.log(ans)
                     })
