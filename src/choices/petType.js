@@ -6,6 +6,10 @@ const petType = [
     {
         name:'Dog',
         value:'Dog'
+    },
+    {
+        name:'Rabbit',
+        value:'Rabbit'
     }
 ]
 
