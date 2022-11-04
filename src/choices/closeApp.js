@@ -1,10 +1,14 @@
 const closeApp = [
     {
-        name:"yes",
+        name:"Save and Exit",
+        value:"saveExit"
+    },
+    {
+        name:"Exit without Saving",
         value:"yes"
     },
     {
-        name:"no",
+        name:"Cancel",
         value:"no"
     }
 ]
