@@ -14,15 +14,29 @@ const actions ={
     }],
     Dog: [
         {
-            name:"Play with your pet",
-            value:"play"
+            name:"Toss the ball",
+            value:"tossBall"
         },
+        {
+            name:"Take dog for a walk",
+            value:"walk"
+        }
     ],
     Cat: [
         {
-            name:"Play with your pet",
+            name:"Groom your cat",
+            value:"groom"
+        },
+    ],
+    Rabbit: [
+        {
+            name:"Play with maze",
             value:"play"
         },
+        {
+            name:"Make bunny hop",
+            value:"hop"
+        }
     ]
     
 }
