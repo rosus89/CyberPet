@@ -19,7 +19,7 @@ let savedPets = ["New Pet"];
 
 let $ = {
     init: async () => {
-         $.checkPets() == true ? await $.petLoadOptions() : await $.createPet();
+         $.checkPets() ? await $.petLoadOptions($.loadPet) : await $.createPet();
          await $.setPetAct();
     },
     createPet: async () => {  await $.setPetType();
@@ -73,7 +73,7 @@ let $ = {
                 },
     save: () => {
                    !fs.existsSync("pets") ? fs.mkdirSync("pets") : null
-                    fs.appendFileSync("./pets/" + pet.name, JSON.stringify(pet), (err) => console.log(err))
+                    fs.appendFileSync("./pets/" + pet.name, JSON.stringify({petType :pet.constructor.name, ...pet}), (err) => console.log(err))
                 },
     checkPets: () => 
                 {   
@@ -83,22 +83,26 @@ let $ = {
                 }
                     else return false
                 },
-    petLoadOptions: async () =>
+    petLoadOptions: async (fn) =>
                 {
                     await _({   type:'list', name:'selectPet',
                     message:'Load existing or create new pet',
                     choices: savedPets  })
                     .then((ans)=>{
-                        console.log(ans)
+                        fn(ans.selectPet)
                     }
-
                     )
-                }
+                },
     
-    // loadPet: async () => {
-    //                 fs.existsSync("pets") ?
-
-    // }
+     loadPet: async (item) => 
+                {
+                     let data = JSON.parse(fs.readFileSync("./pets/" + item, "utf8"))
+                     if (data.petType === "Cat"){
+                        console.log(data.name)
+                        pet = new Cat(data.name, data.health, data.hunger, data.thirst, data.happiness, data.energy)
+                     }
+                     
+                }
 }
 
 $.init();

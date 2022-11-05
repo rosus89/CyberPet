@@ -1,8 +1,8 @@
 import Animal from "./animal.js";
 
 class Dog extends Animal {
-    constructor(name){
-        super(name)
+    constructor(name,health, hunger, thirst, happiness, energy){
+        super(name,health, hunger, thirst, happiness, energy)
     }
     tossBall() {
         this.happiness += 10

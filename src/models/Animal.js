@@ -1,11 +1,11 @@
 class Animal {
-    constructor(name){
+    constructor(name,health, hunger, thirst, happiness, energy){
         this.name = name
-        this.health = 50
-        this.hunger = 50
-        this.thirst = 50
-        this.happiness = 50
-        this.energy = 100
+        this.health = health === undefined ? 50 : health
+        this.hunger = hunger === undefined ? 50 : hunger
+        this.thirst = thirst === undefined ? 50 : thirst
+        this.happiness = happiness === undefined ? 50 : happiness
+        this.energy = energy === undefined ? 100 :energy
     }
     drink() {
         this.health += 5
