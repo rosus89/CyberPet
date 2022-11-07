@@ -12,6 +12,7 @@ import closeApp from "./choices/closeApp.js";
 
 
 
+
 const _ = inquirer.prompt;
 const separator = new inquirer.Separator();
 let pet;
@@ -29,20 +30,21 @@ let $ = {
     setPetType: async () => { await _({  type:'list', name:'type',
                             message:'What type of pet would you like?',
                             choices: petType })
-                        .then((ans) => {
-                            switch(ans.type){
-                                case 'Cat':
-                                    pet = new Cat();
-                                    break;
-                                case 'Dog':
-                                    pet = new Dog();
-                                    break;
-                                case 'Rabbit':
-                                    pet = new Rabbit();
-                                    break;
-                            }
-                        } )
+                        .then((ans)=>$.createPetType(ans.type))
                         },
+    createPetType:  (type, name, health, hunger, thirst, happiness, energy) => {
+                                switch(type){
+                                    case 'Cat':
+                                        pet = new Cat(name, health, hunger, thirst, happiness, energy);
+                                        break;
+                                    case 'Dog':
+                                        pet = new Dog(name, health, hunger, thirst, happiness, energy);
+                                        break;
+                                    case 'Rabbit':
+                                        pet = new Rabbit(name, health, hunger, thirst, happiness, energy);
+                                        break;
+                                }
+                            },
 
     setPetName: async () => { await _({  type:'input', name:'name',
                         message:'How should your pet be called?'})
@@ -71,10 +73,13 @@ let $ = {
                         
                     })
                 },
+                
     save: () => {
                    !fs.existsSync("pets") ? fs.mkdirSync("pets") : null
                     fs.appendFileSync("./pets/" + pet.name, JSON.stringify({petType :pet.constructor.name, ...pet}), (err) => console.log(err))
                 },
+
+                //TODO: update pet instead of adding to the object
     checkPets: () => 
                 {   
                     if(fs.existsSync("pets") === true){       
@@ -83,6 +88,7 @@ let $ = {
                 }
                     else return false
                 },
+
     petLoadOptions: async (fn) =>
                 {
                     await _({   type:'list', name:'selectPet',
@@ -94,13 +100,10 @@ let $ = {
                     )
                 },
     
-     loadPet: async (item) => 
+     loadPet: async  (item) => 
                 {
-                     let data = JSON.parse(fs.readFileSync("./pets/" + item, "utf8"))
-                     if (data.petType === "Cat"){
-                        console.log(data.name)
-                        pet = new Cat(data.name, data.health, data.hunger, data.thirst, data.happiness, data.energy)
-                     }
+                     const data = await JSON.parse(fs.readFileSync("./pets/" + item, "utf8"))
+                     $.createPetType(data.petType,data.name, data.health, data.hunger, data.thirst, data.happiness, data.energy)
                      
                 }
 }
