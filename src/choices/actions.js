@@ -11,7 +11,12 @@ const actions ={
     {
         name:"Put your pet to sleep",
         value:"sleep"
-    }],
+    },
+    {
+        name:"Display pet stats",
+        value:"stats"
+    }
+],
     Dog: [
         {
             name:"Toss the ball",
