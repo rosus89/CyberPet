@@ -20,7 +20,7 @@ let savedPets = ["New Pet"];
 
 let $ = {
     init: async () => {
-         $.checkPets() ? await $.petLoadOptions($.loadPet) : await $.createPet();
+         $.checkPets() ? await $.petLoadOptions($.loadPet, $.createPet) : await $.createPet();
          await $.setPetAct();
     },
     createPet: async () => {  await $.setPetType();
@@ -89,14 +89,14 @@ let $ = {
                     else return false
                 },
 
-    petLoadOptions: async (fn) =>
+    petLoadOptions: async (load, create) =>
                 {
                     await _({   type:'list', name:'selectPet',
                     message:'Load existing or create new pet',
                     choices: savedPets  })
                     .then((ans)=>{
-                        fn(ans.selectPet)
-                    }
+                       return ans.selectPet !="New Pet" ? load(ans.selectPet) :  create()
+                     }
                     )
                 },
     
